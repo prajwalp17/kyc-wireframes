@@ -736,7 +736,7 @@
     <div class="meta-item">Product<span>Digital Gold</span></div>
     <div class="meta-item">Target Users<span>Expat Residents</span></div>
     <div class="meta-item">Documents<span>Emirates ID + Passport</span></div>
-    <div class="meta-item">Screens<span>26 total</span></div>
+    <div class="meta-item">Screens<span>27 total</span></div>
   </div>
 </div>
 
@@ -785,6 +785,23 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div style="max-width:720px;margin-top:24px;">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mid);font-weight:700;margin-bottom:12px;">Two Core Flows</div>
+    <div style="display:flex;gap:16px;">
+      <div style="flex:1;border:2px solid var(--black);border-radius:12px;padding:16px;">
+        <div style="font-size:13px;font-weight:800;margin-bottom:4px;">Flow 1 — Authentication</div>
+        <div style="font-size:11px;color:var(--dark);line-height:1.5;">Connecting the user's UAE PASS account to your app. Uses OAuth 2.0. You get their verified identity (name, Emirates ID number, mobile, email). This is a <strong>one-time setup</strong> — you store the link and don't need to do it again.</div>
+        <div style="margin-top:8px;font-size:10px;color:var(--mid);">Covered in → Journey 1</div>
+      </div>
+      <div style="flex:1;border:2px solid var(--black);border-radius:12px;padding:16px;">
+        <div style="font-size:13px;font-weight:800;margin-bottom:4px;">Flow 2 — KYC via Digital Vault</div>
+        <div style="font-size:11px;color:var(--dark);line-height:1.5;">Requesting actual documents (Emirates ID, Passport) from the user's Digital Vault for identity verification. The user gets a push notification in UAE PASS and approves sharing. Documents arrive at your server with digital signatures.</div>
+        <div style="margin-top:8px;font-size:10px;color:var(--mid);">Covered in → Journey 2</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--mid);margin-top:10px;line-height:1.5;">These are two separate interactions. Authentication gives you the user's profile. Digital Vault gives you their actual documents. For a first-time user, both happen back-to-back (Journey 3).</div>
   </div>
 </div>
 
@@ -1080,10 +1097,56 @@
 
   <div class="screen-row">
 
-    <!-- 2.1 Consent -->
+    <!-- 2.1 KYC Trigger -->
     <div class="screen-col">
       <div class="phone">
         <span class="s-badge">2.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Digital Gold</div>
+        <div class="sc" style="filter:blur(1.5px);opacity:0.3;">
+          <div class="t-xl">AED 285.50</div>
+        </div>
+        <div class="bs-overlay">
+          <div class="bs">
+            <div class="bs-handle"></div>
+            <div class="uae-logo">UAE</div>
+            <div class="t-lg t-c">Identity Verification</div>
+            <div class="t-sm t-c mt8" style="line-height:1.5;">
+              To buy digital gold, we need to verify your identity using your UAE PASS Digital Vault.
+            </div>
+            <div class="divider"></div>
+            <div class="t-sm mb8" style="font-weight:600;color:var(--dark);">Documents needed:</div>
+            <div class="doc-row">
+              <div class="doc-icon">🪪</div>
+              <div class="doc-info">
+                <div class="doc-name">Emirates ID</div>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-icon">📘</div>
+              <div class="doc-info">
+                <div class="doc-name">Passport</div>
+              </div>
+            </div>
+            <div class="btn mt12">Verify with UAE PASS</div>
+            <div class="t-xs t-c mt8">Takes about 1 minute</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">KYC Trigger</div>
+        <div class="sl-desc">User taps "Buy Gold". Already connected — goes straight to DV flow.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Check: uaepass_uuid exists</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 2.2 Consent -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">2.2</span>
         <div class="notch"></div>
         <div class="sb"><span>9:42</span><span>●●●</span></div>
         <div class="nav"><span class="bk">‹</span> Verify Identity</div>
@@ -1138,10 +1201,10 @@
 
     <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
 
-    <!-- 2.2 Waiting -->
+    <!-- 2.3 Waiting -->
     <div class="screen-col">
       <div class="phone">
-        <span class="s-badge">2.2</span>
+        <span class="s-badge">2.3</span>
         <div class="notch"></div>
         <div class="sb"><span>9:42</span><span>●●●</span></div>
         <div class="nav"><span class="bk">‹</span> Verify Identity</div>
@@ -1175,10 +1238,10 @@
 
     <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
 
-    <!-- 2.3 UAE PASS notification -->
+    <!-- 2.4 UAE PASS notification -->
     <div class="screen-col">
       <div class="phone" style="border-color:var(--mid);">
-        <span class="s-badge" style="background:var(--mid);">2.3</span>
+        <span class="s-badge" style="background:var(--mid);">2.4</span>
         <div class="notch" style="background:var(--mid);"></div>
         <div class="sb"><span>9:42</span><span>●●●</span></div>
         <div class="sc" style="padding-top:20px;">
@@ -1225,10 +1288,10 @@
 
     <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
 
-    <!-- 2.4 Verifying -->
+    <!-- 2.5 Verifying -->
     <div class="screen-col">
       <div class="phone">
-        <span class="s-badge">2.4</span>
+        <span class="s-badge">2.5</span>
         <div class="notch"></div>
         <div class="sb"><span>9:43</span><span>●●●</span></div>
         <div class="nav"> Verify Identity</div>
@@ -1264,10 +1327,10 @@
 
     <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
 
-    <!-- 2.5 Success -->
+    <!-- 2.6 Success -->
     <div class="screen-col">
       <div class="phone">
-        <span class="s-badge">2.5</span>
+        <span class="s-badge">2.6</span>
         <div class="notch"></div>
         <div class="sb"><span>9:43</span><span>●●●</span></div>
         <div class="nav"> Verified</div>
