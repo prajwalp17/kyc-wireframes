@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE PASS Integration — Wireframes</title>
+<style>
+  :root {
+    --black: #111;
+    --dark: #333;
+    --mid: #777;
+    --light: #bbb;
+    --faint: #e8e8e8;
+    --bg: #f5f5f5;
+    --white: #fff;
+    --radius: 28px;
+    --phone-w: 220px;
+    --phone-h: 440px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .page-header {
+    background: var(--black);
+    color: var(--white);
+    padding: 48px 40px 40px;
+  }
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .page-header p {
+    font-size: 14px;
+    color: #999;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+  }
+  .meta-item span {
+    display: block;
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 3px;
+  }
+
+  /* ===== FLOW MAP ===== */
+  .flow-map-section {
+    padding: 40px;
+    background: var(--white);
+    border-bottom: 1px solid var(--faint);
+  }
+  .flow-map-section h2 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+  .flow-map {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 12px;
+    max-width: 900px;
+  }
+  .fm-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .fm-node {
+    padding: 8px 14px;
+    border: 1.5px solid var(--black);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+    background: var(--white);
+  }
+  .fm-node.start {
+    background: var(--black);
+    color: var(--white);
+    border-radius: 20px;
+  }
+  .fm-node.decision {
+    transform: rotate(0deg);
+    border-style: dashed;
+    background: #fafafa;
+  }
+  .fm-node.error {
+    border-color: var(--mid);
+    color: var(--mid);
+    background: #fafafa;
+  }
+  .fm-node.success {
+    background: var(--black);
+    color: var(--white);
+  }
+  .fm-node.uaepass {
+    border-color: var(--mid);
+    background: #f7f7f7;
+  }
+  .fm-arrow {
+    font-size: 14px;
+    color: var(--light);
+    flex-shrink: 0;
+  }
+  .fm-label {
+    font-size: 9px;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+  }
+  .fm-branch {
+    margin-left: 40px;
+    padding-left: 16px;
+    border-left: 2px solid var(--faint);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 40px;
+    border-bottom: 1px solid var(--faint);
+  }
+  .section:last-child { border-bottom: none; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--white);
+    background: var(--black);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 28px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+
+  /* ===== SCREEN ROW ===== */
+  .screen-row {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    align-items: flex-start;
+  }
+  .screen-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ===== PHONE ===== */
+  .phone {
+    width: var(--phone-w);
+    min-height: var(--phone-h);
+    border: 2px solid var(--black);
+    border-radius: var(--radius);
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  /* Notch */
+  .notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: var(--black);
+    border-radius: 0 0 14px 14px;
+    z-index: 20;
+  }
+
+  /* Status bar */
+  .sb {
+    height: 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 18px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--dark);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Nav */
+  .nav {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--faint);
+  }
+  .nav .bk {
+    font-size: 18px;
+    margin-right: 6px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  /* Content */
+  .sc {
+    flex: 1;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  /* Bottom fixed */
+  .bf {
+    padding: 10px 14px 14px;
+    border-top: 1px solid var(--faint);
+    flex-shrink: 0;
+    background: var(--white);
+  }
+
+  /* Home indicator */
+  .home-ind {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .home-ind::after {
+    content: '';
+    width: 48px;
+    height: 4px;
+    background: var(--black);
+    border-radius: 2px;
+    opacity: 0.2;
+  }
+
+  /* Tab bar */
+  .tbar {
+    height: 38px;
+    border-top: 1px solid var(--faint);
+    display: flex;
+    flex-shrink: 0;
+  }
+  .tbar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: var(--light);
+    gap: 2px;
+  }
+  .tbar-item.active { color: var(--black); }
+  .tbar-icon {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid currentColor;
+    border-radius: 4px;
+  }
+  .tbar-icon.circle { border-radius: 50%; }
+
+  /* ===== COMPONENTS ===== */
+  .btn {
+    width: 100%;
+    padding: 11px;
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    background: var(--black);
+    color: var(--white);
+  }
+  .btn-o {
+    background: var(--white);
+    color: var(--black);
+  }
+  .btn + .btn { margin-top: 8px; }
+
+  .card {
+    border: 1.5px solid var(--faint);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .card-dark {
+    background: #fafafa;
+  }
+
+  .divider { height: 1px; background: var(--faint); margin: 12px 0; }
+
+  /* Text */
+  .t-xs { font-size: 9px; color: var(--light); line-height: 1.3; }
+  .t-sm { font-size: 11px; color: var(--mid); line-height: 1.4; }
+  .t-md { font-size: 12px; color: var(--dark); line-height: 1.5; }
+  .t-lg { font-size: 15px; font-weight: 700; color: var(--black); }
+  .t-xl { font-size: 20px; font-weight: 800; color: var(--black); }
+  .t-c { text-align: center; }
+  .mt4 { margin-top: 4px; }
+  .mt8 { margin-top: 8px; }
+  .mt12 { margin-top: 12px; }
+  .mt16 { margin-top: 16px; }
+  .mb8 { margin-bottom: 8px; }
+  .mb12 { margin-bottom: 12px; }
+
+  /* Chart placeholder */
+  .chart-ph {
+    width: 100%;
+    height: 64px;
+    border: 1.5px dashed var(--light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--light);
+    margin: 8px 0;
+  }
+
+  /* Pill */
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 700;
+    border: 1px solid var(--light);
+    color: var(--mid);
+  }
+
+  /* Document row */
+  .doc-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-icon {
+    width: 30px;
+    height: 30px;
+    border: 1.5px solid var(--light);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .doc-info { flex: 1; }
+  .doc-name { font-size: 11px; font-weight: 700; color: var(--black); }
+  .doc-desc { font-size: 9px; color: var(--mid); margin-top: 1px; }
+
+  .chk {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--black);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .chk-on { background: var(--black); color: var(--white); }
+
+  /* Spinner */
+  .spin {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--faint);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: sp 0.8s linear infinite;
+  }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* Icon circle */
+  .ic {
+    width: 48px;
+    height: 48px;
+    border: 2.5px solid var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+  /* UAE PASS logo */
+  .uae-logo {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--black);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin: 0 auto 8px;
+  }
+
+  /* Bottom sheet */
+  .bs-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: flex-end;
+    z-index: 15;
+  }
+  .bs {
+    background: var(--white);
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 14px;
+  }
+  .bs-handle {
+    width: 28px;
+    height: 3px;
+    background: var(--light);
+    border-radius: 2px;
+    margin: 0 auto 10px;
+  }
+
+  /* Info box */
+  .info-box {
+    border: 1.5px solid var(--faint);
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #fafafa;
+  }
+
+  /* Step indicator */
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--light);
+  }
+  .step-dot.active {
+    background: var(--black);
+    border-color: var(--black);
+  }
+  .step-dot.done {
+    background: var(--dark);
+    border-color: var(--dark);
+  }
+  .step-line {
+    width: 20px;
+    height: 1.5px;
+    background: var(--light);
+  }
+  .step-line.done { background: var(--dark); }
+
+  /* Status tag */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    border: 1px solid var(--faint);
+    color: var(--dark);
+  }
+  .tag-ok { border-color: var(--dark); }
+
+  /* Timer */
+  .timer {
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: var(--black);
+  }
+
+  /* Progress list */
+  .prog-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--dark);
+  }
+  .prog-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .prog-dot.ok { background: var(--black); color: var(--white); border-color: var(--black); }
+
+  /* Screen label */
+  .screen-label {
+    margin-top: 10px;
+    text-align: center;
+    max-width: var(--phone-w);
+  }
+  .sl-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .sl-desc {
+    font-size: 10px;
+    color: var(--mid);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* Annotation */
+  .anno {
+    margin-top: 6px;
+    max-width: var(--phone-w);
+    text-align: center;
+  }
+  .anno-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    background: var(--black);
+    color: #aaa;
+    letter-spacing: 0.3px;
+  }
+
+  /* Arrow connector */
+  .arrow-conn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: -40px;
+  }
+  .arrow-line {
+    width: 20px;
+    height: 1.5px;
+    background: var(--light);
+  }
+  .arrow-head {
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid var(--light);
+  }
+
+  /* Screen badge */
+  .s-badge {
+    position: absolute;
+    top: 28px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--black);
+    padding: 1px 6px;
+    border-radius: 4px;
+    z-index: 25;
+  }
+
+  /* Upload area */
+  .upload-area {
+    width: 100%;
+    height: 80px;
+    border: 2px dashed var(--light);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  /* Profile row */
+  .prof-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .prof-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Notification mock */
+  .notif-bar {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 6px 0;
+    border: 1px solid var(--faint);
+  }
+  .notif-icon {
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--dark);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid var(--faint);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--mid);
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1.5px solid var(--black);
+  }
+  .legend-swatch.dashed { border-style: dashed; }
+  .legend-swatch.filled { background: var(--black); }
+  .legend-swatch.grey { border-color: var(--mid); background: #fafafa; }
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<div class="page-header">
+  <h1>UAE PASS Integration — Wireframes</h1>
+  <p>Digital Gold KYC verification via UAE PASS authentication and Digital Vault document sharing</p>
+  <div class="meta-row">
+    <div class="meta-item">Platform<span>iOS / Android</span></div>
+    <div class="meta-item">Product<span>Digital Gold</span></div>
+    <div class="meta-item">Target Users<span>Expat Residents</span></div>
+    <div class="meta-item">Documents<span>Emirates ID + Passport</span></div>
+    <div class="meta-item">Screens<span>26 total</span></div>
+  </div>
+</div>
+
+<!-- ==================== GLOSSARY ==================== -->
+<div class="section" style="background:var(--white);padding-bottom:28px;">
+  <div class="section-header">
+    <span class="section-num">G</span>
+    <h2>Key Terms</h2>
+  </div>
+  <p class="section-desc">Quick reference before diving into the flows.</p>
+
+  <div style="max-width:720px;">
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--black);text-align:left;">
+          <th style="padding:10px 16px 10px 0;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--mid);width:160px;">Term</th>
+          <th style="padding:10px 0;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--mid);">What It Means</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--faint);">
+          <td style="padding:12px 16px 12px 0;font-weight:700;vertical-align:top;">UAE PASS</td>
+          <td style="padding:12px 0;color:var(--dark);line-height:1.5;">The UAE's national digital identity app — the government's single sign-on. One app to prove who you are across all government and private services.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--faint);">
+          <td style="padding:12px 16px 12px 0;font-weight:700;vertical-align:top;">Digital Vault (DV)</td>
+          <td style="padding:12px 0;color:var(--dark);line-height:1.5;">Secure document storage inside UAE PASS. Official documents (Emirates ID, passport, visa) are stored as digitally signed credentials. We request documents from here instead of asking users to upload photos.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--faint);">
+          <td style="padding:12px 16px 12px 0;font-weight:700;vertical-align:top;">SOP Levels</td>
+          <td style="padding:12px 0;color:var(--dark);line-height:1.5;">The user's verification tier in UAE PASS.<br>
+            <span style="display:inline-block;margin-top:6px;">
+              <strong>SOP1</strong> (Basic): Mobile + email only. Can log in, can't share documents.<br>
+              <strong>SOP2</strong> (Advanced): Verified via Emirates ID PIN. Still no Digital Vault.<br>
+              <strong>SOP3</strong> (Verified): Biometric verification done. <strong>Required</strong> for Digital Vault access.
+            </span>
+          </td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--faint);">
+          <td style="padding:12px 16px 12px 0;font-weight:700;vertical-align:top;">KYC</td>
+          <td style="padding:12px 0;color:var(--dark);line-height:1.5;">Know Your Customer — regulatory requirement to verify identity before offering financial products. We do this by requesting Emirates ID + Passport via Digital Vault.</td>
+        </tr>
+        <tr>
+          <td style="padding:12px 16px 12px 0;font-weight:700;vertical-align:top;">Service Provider (SP)</td>
+          <td style="padding:12px 0;color:var(--dark);line-height:1.5;">That's us — any company integrating with UAE PASS. We get API credentials and go through an onboarding/approval process with TDRA (the government body that runs UAE PASS).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== FLOW MAP ==================== -->
+<div class="flow-map-section">
+  <h2>Flow Architecture</h2>
+  <div class="flow-map">
+    <div class="fm-row">
+      <div class="fm-node start">User taps Buy Gold</div>
+      <div class="fm-arrow">→</div>
+      <div class="fm-node decision">UAE PASS connected?</div>
+    </div>
+    <div class="fm-branch">
+      <div class="fm-row" style="margin-bottom:8px;">
+        <div class="fm-label">NO</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node">Journey 1: Connect UAE PASS</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node decision">App installed?</div>
+      </div>
+      <div class="fm-branch">
+        <div class="fm-row" style="margin-bottom:6px;">
+          <div class="fm-label">NO</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node error">App Store redirect</div>
+        </div>
+        <div class="fm-row">
+          <div class="fm-label">YES</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node uaepass">OAuth → UAE PASS app</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node decision">SOP level?</div>
+        </div>
+        <div class="fm-branch">
+          <div class="fm-row" style="margin-bottom:6px;">
+            <div class="fm-label">SOP1/2</div>
+            <div class="fm-arrow">→</div>
+            <div class="fm-node error">Upgrade needed</div>
+            <div class="fm-arrow">→</div>
+            <div class="fm-node error">Manual upload fallback</div>
+          </div>
+          <div class="fm-row">
+            <div class="fm-label">SOP3 ✓</div>
+            <div class="fm-arrow">→</div>
+            <div class="fm-node success">Connected</div>
+            <div class="fm-arrow">→</div>
+            <div class="fm-label">continues to Journey 2 ↓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fm-branch" style="margin-top:4px;">
+      <div class="fm-row">
+        <div class="fm-label">YES</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node">Journey 2: KYC via Digital Vault</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node">Consent screen</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node uaepass">DV Request → UAE PASS app</div>
+        <div class="fm-arrow">→</div>
+        <div class="fm-node decision">User approves?</div>
+      </div>
+      <div class="fm-branch">
+        <div class="fm-row" style="margin-bottom:6px;">
+          <div class="fm-label">DECLINED</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node error">Declined / Timeout / Partial</div>
+        </div>
+        <div class="fm-row" style="margin-bottom:6px;">
+          <div class="fm-label">APPROVED</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node">Verify signatures</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node success">KYC Complete</div>
+          <div class="fm-arrow">→</div>
+          <div class="fm-node success">Buy Gold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch filled"></div>Start / End states</div>
+    <div class="legend-item"><div class="legend-swatch dashed"></div>Decision points</div>
+    <div class="legend-item"><div class="legend-swatch grey"></div>UAE PASS app (external)</div>
+    <div class="legend-item"><div class="legend-swatch" style="border-color:var(--mid);"></div>Error states</div>
+  </div>
+</div>
+
+<!-- ==================== JOURNEY 1 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">1</span>
+    <h2>Journey 1 — Connect UAE PASS</h2>
+  </div>
+  <p class="section-desc">First-time one-off connection. User is already logged into your app. This gets their UUID, verified mobile, and email so you can use the "without auth" DV flow later.</p>
+
+  <div class="screen-row">
+
+    <!-- 1.1 -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">1.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Digital Gold</div>
+        <div class="sc">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+            <div>
+              <div class="t-sm">Gold Price (24K)</div>
+              <div class="t-xl">AED 285.50</div>
+              <div class="t-sm mt4" style="color:var(--dark);">▲ 1.2% today</div>
+            </div>
+            <span class="pill">Live</span>
+          </div>
+          <div class="chart-ph">[ Price Chart ]</div>
+          <div class="card">
+            <div class="t-sm">Your Holdings</div>
+            <div class="t-lg mt4">0.00 g</div>
+            <div class="t-sm mt4">AED 0.00</div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Buy Gold</div>
+        </div>
+        <div class="tbar">
+          <div class="tbar-item"><div class="tbar-icon"></div>Home</div>
+          <div class="tbar-item active"><div class="tbar-icon"></div>Gold</div>
+          <div class="tbar-item"><div class="tbar-icon circle"></div>Profile</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Digital Gold Home</div>
+        <div class="sl-desc">User taps "Buy Gold"</div>
+      </div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 1.2 -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">1.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Digital Gold</div>
+        <div class="sc" style="filter:blur(1.5px);opacity:0.3;">
+          <div class="t-xl">AED 285.50</div>
+        </div>
+        <div class="bs-overlay">
+          <div class="bs">
+            <div class="bs-handle"></div>
+            <div class="uae-logo">UAE</div>
+            <div class="t-lg t-c">Connect UAE PASS</div>
+            <div class="t-sm t-c mt8" style="line-height:1.5;">
+              To buy digital gold, connect your UAE PASS account. This is a one-time setup.
+            </div>
+            <div class="divider"></div>
+            <div class="t-sm mb8">You'll share:</div>
+            <div class="doc-row">
+              <div class="doc-icon">🪪</div>
+              <div class="doc-info">
+                <div class="doc-name">Basic Profile</div>
+                <div class="doc-desc">Name, Emirates ID, mobile, email</div>
+              </div>
+            </div>
+            <div class="btn mt12">Connect with UAE PASS</div>
+            <div class="t-xs t-c mt8">Secure authentication via UAE PASS</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Connection Prompt</div>
+        <div class="sl-desc">Bottom sheet explains one-time setup</div>
+      </div>
+      <div class="anno"><div class="anno-tag">OAuth 2.0 redirect →</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 1.3 UAE PASS -->
+    <div class="screen-col">
+      <div class="phone" style="border-color:var(--mid);">
+        <span class="s-badge" style="background:var(--mid);">1.3</span>
+        <div class="notch" style="background:var(--mid);"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav" style="border-color:#eee;color:var(--mid);"> UAE PASS</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div style="width:60px;height:60px;border:2px solid var(--mid);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <span style="font-size:10px;font-weight:900;color:var(--mid);">UAE<br>PASS</span>
+          </div>
+          <div class="t-lg t-c" style="color:var(--mid);">Enter Your PIN</div>
+          <div class="t-sm t-c mt8">Authenticate to connect with<br>[Your App Name]</div>
+          <div style="display:flex;gap:10px;margin-top:20px;">
+            <div style="width:12px;height:12px;border-radius:50%;border:2px solid var(--mid);"></div>
+            <div style="width:12px;height:12px;border-radius:50%;border:2px solid var(--mid);"></div>
+            <div style="width:12px;height:12px;border-radius:50%;border:2px solid var(--mid);"></div>
+            <div style="width:12px;height:12px;border-radius:50%;border:2px solid var(--mid);"></div>
+          </div>
+          <div class="t-xs t-c mt16">Or use biometrics</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title" style="color:var(--mid);">UAE PASS App</div>
+        <div class="sl-desc">User authenticates (external app)</div>
+      </div>
+      <div class="anno"><div class="anno-tag">← auth code callback</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 1.4 Processing -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">1.4</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"> Connecting</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="spin"></div>
+          <div class="t-lg t-c mt16">Connecting UAE PASS</div>
+          <div class="t-sm t-c mt8">Verifying your account...</div>
+          <div class="mt16" style="width:100%;">
+            <div class="prog-item">
+              <div class="prog-dot ok">✓</div>
+              <span>Authentication complete</span>
+            </div>
+            <div class="prog-item">
+              <div class="prog-dot ok">✓</div>
+              <span>Profile retrieved</span>
+            </div>
+            <div class="prog-item">
+              <div class="spin" style="width:14px;height:14px;border-width:1.5px;margin:0;"></div>
+              <span>Checking verification level...</span>
+            </div>
+          </div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Processing</div>
+        <div class="sl-desc">Exchange code, call /userinfo, check SOP</div>
+      </div>
+      <div class="anno"><div class="anno-tag">POST /token + GET /userinfo</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 1.5 Connected -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">1.5</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"> Connected</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic">✓</div>
+          <div class="t-lg t-c mt16">UAE PASS Connected!</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">Your account is linked. Now let's verify your identity to start buying gold.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="card card-dark">
+              <div class="t-xs">Connected as</div>
+              <div class="t-md mt4" style="font-weight:700;">Mohammed Al Rashid</div>
+              <div class="t-xs mt4">EID: 784-XXXX-XXXXXXX-X</div>
+            </div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Continue to Verification</div>
+          <div class="btn btn-o">Later</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Connection Success</div>
+        <div class="sl-desc">UUID + mobile + email stored. Offers to continue to KYC.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Store uuid, mobile, email, idn</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== JOURNEY 2 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2</span>
+    <h2>Journey 2 — KYC via Digital Vault</h2>
+  </div>
+  <p class="section-desc">User is connected (Journey 1 done). We request Emirates ID + Passport from their Digital Vault. The request goes to their UAE PASS app as a push notification. Once approved, documents arrive at our webhook.</p>
+
+  <div class="screen-row">
+
+    <!-- 2.1 Consent -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">2.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc">
+          <div class="steps">
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot active"></div>
+            <div class="step-line"></div>
+            <div class="step-dot"></div>
+          </div>
+          <div class="uae-logo">UAE</div>
+          <div class="t-lg t-c">Share Your Documents</div>
+          <div class="t-sm t-c mt8">We'll request these from your UAE PASS Digital Vault:</div>
+          <div class="mt12">
+            <div class="doc-row">
+              <div class="doc-icon">🪪</div>
+              <div class="doc-info">
+                <div class="doc-name">Emirates ID</div>
+                <div class="doc-desc">Name, photo, EID number, nationality, expiry</div>
+              </div>
+              <div class="chk chk-on">✓</div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-icon">📘</div>
+              <div class="doc-info">
+                <div class="doc-name">Passport</div>
+                <div class="doc-desc">Passport number, issue/expiry, MRZ data</div>
+              </div>
+              <div class="chk chk-on">✓</div>
+            </div>
+          </div>
+          <div class="info-box mt12">
+            <div class="t-sm" style="color:var(--dark);">
+              <strong>Next:</strong> A request will appear in your UAE PASS app. Approve to share your documents.
+            </div>
+          </div>
+          <div style="flex:1;"></div>
+          <div class="t-xs t-c mt12">By continuing, you consent to sharing your identity documents for KYC verification.</div>
+        </div>
+        <div class="bf">
+          <div class="btn">Send Request to UAE PASS</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Document Consent</div>
+        <div class="sl-desc">User reviews what will be shared. Compliance audit log captured.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Log consent → audit trail</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 2.2 Waiting -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">2.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="steps">
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot active"></div>
+            <div class="step-line"></div>
+            <div class="step-dot"></div>
+          </div>
+          <div class="spin"></div>
+          <div class="t-lg t-c mt16">Waiting for Approval</div>
+          <div class="t-sm t-c mt8">Open your <strong>UAE PASS</strong> app and approve the document sharing request.</div>
+          <div class="timer mt16">4:32</div>
+          <div class="t-xs t-c mt4">Request expires in</div>
+          <div style="flex:1;"></div>
+          <div class="t-xs t-c" style="color:var(--light);">Don't see it? <u>Resend notification</u></div>
+        </div>
+        <div class="bf">
+          <div class="btn btn-o">Cancel</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Waiting for UAE PASS</div>
+        <div class="sl-desc">5 min countdown. User switches to UAE PASS.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">POST /presentation/request</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 2.3 UAE PASS notification -->
+    <div class="screen-col">
+      <div class="phone" style="border-color:var(--mid);">
+        <span class="s-badge" style="background:var(--mid);">2.3</span>
+        <div class="notch" style="background:var(--mid);"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="sc" style="padding-top:20px;">
+          <div class="notif-bar">
+            <div class="notif-icon">UAE</div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--dark);">UAE PASS</div>
+              <div class="t-sm mt4">[Your App] is requesting your Emirates ID and Passport</div>
+              <div class="t-xs mt4">Tap to review</div>
+            </div>
+          </div>
+          <div class="divider" style="margin:16px 0;"></div>
+          <div class="t-lg t-c" style="color:var(--mid);">Document Request</div>
+          <div class="t-sm t-c mt8">Review what [Your App] is requesting:</div>
+          <div class="mt12">
+            <div class="doc-row">
+              <div class="doc-icon" style="border-color:var(--mid);">🪪</div>
+              <div class="doc-info">
+                <div class="doc-name" style="color:var(--mid);">Emirates ID</div>
+                <div class="doc-desc">All fields</div>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-icon" style="border-color:var(--mid);">📘</div>
+              <div class="doc-info">
+                <div class="doc-name" style="color:var(--mid);">Passport</div>
+                <div class="doc-desc">All fields</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bf" style="border-color:#eee;">
+          <div class="btn" style="background:var(--mid);border-color:var(--mid);">Share Documents</div>
+          <div class="btn btn-o" style="border-color:var(--mid);color:var(--mid);">Decline</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title" style="color:var(--mid);">UAE PASS App</div>
+        <div class="sl-desc">Push notification + document approval screen (external)</div>
+      </div>
+      <div class="anno"><div class="anno-tag">User's UAE PASS app</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 2.4 Verifying -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">2.4</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:43</span><span>●●●</span></div>
+        <div class="nav"> Verify Identity</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="steps">
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot active"></div>
+          </div>
+          <div class="spin"></div>
+          <div class="t-lg t-c mt16">Verifying Documents</div>
+          <div class="t-sm t-c mt8">Checking digital signatures and validating credentials...</div>
+          <div class="mt16" style="width:100%;">
+            <div class="prog-item"><div class="prog-dot ok">✓</div>Emirates ID received</div>
+            <div class="prog-item"><div class="prog-dot ok">✓</div>Passport received</div>
+            <div class="prog-item"><div class="prog-dot ok">✓</div>CAdES signatures valid</div>
+            <div class="prog-item">
+              <div class="spin" style="width:14px;height:14px;border-width:1.5px;margin:0;"></div>
+              <span>Cross-checking data...</span>
+            </div>
+          </div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Verifying</div>
+        <div class="sl-desc">Webhook received. Verify CAdES, check expiry, cross-check.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Webhook: /receive-presentation</div></div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 2.5 Success -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">2.5</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:43</span><span>●●●</span></div>
+        <div class="nav"> Verified</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="steps">
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot done"></div>
+            <div class="step-line done"></div>
+            <div class="step-dot done"></div>
+          </div>
+          <div class="ic">✓</div>
+          <div class="t-lg t-c mt16">Identity Verified!</div>
+          <div class="t-sm t-c mt8">Your Emirates ID and Passport have been verified.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="card card-dark">
+              <div class="t-xs">Verified as</div>
+              <div class="t-md mt4" style="font-weight:700;">Mohammed Al Rashid</div>
+              <div class="t-xs mt4">EID: 784-XXXX-XXXXXXX-X</div>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <div class="tag tag-ok">✓ Emirates ID</div>
+                <div class="tag tag-ok">✓ Passport</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Continue to Buy Gold</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">KYC Success</div>
+        <div class="sl-desc">Both documents verified. User returns to purchase flow.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">KYC status → approved</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== POST-KYC: BUY GOLD ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3</span>
+    <h2>Post-KYC — Buy Gold</h2>
+  </div>
+  <p class="section-desc">After successful KYC, the user lands back in the purchase flow. Shows the payoff — verification unlocks the ability to invest.</p>
+
+  <div class="screen-row">
+
+    <!-- 3.1 Amount -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">3.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:43</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Buy Gold</div>
+        <div class="sc">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="t-sm">Gold Price (24K)</div>
+            <div class="pill">Live</div>
+          </div>
+          <div class="t-lg mt4">AED 285.50 /g</div>
+          <div class="divider"></div>
+          <div class="t-sm mb8">Enter amount</div>
+          <div style="border:2px solid var(--black);border-radius:12px;padding:14px;display:flex;align-items:baseline;gap:4px;">
+            <span class="t-sm" style="color:var(--dark);">AED</span>
+            <span style="font-size:28px;font-weight:800;">500</span>
+          </div>
+          <div class="t-xs mt8" style="text-align:right;">≈ 1.75 g gold</div>
+          <div style="display:flex;gap:6px;margin-top:12px;">
+            <div style="flex:1;padding:8px;border:1.5px solid var(--faint);border-radius:8px;text-align:center;font-size:11px;font-weight:600;">50</div>
+            <div style="flex:1;padding:8px;border:1.5px solid var(--faint);border-radius:8px;text-align:center;font-size:11px;font-weight:600;">100</div>
+            <div style="flex:1;padding:8px;border:1.5px solid var(--faint);border-radius:8px;text-align:center;font-size:11px;font-weight:600;">500</div>
+            <div style="flex:1;padding:8px;border:1.5px solid var(--faint);border-radius:8px;text-align:center;font-size:11px;font-weight:600;">1000</div>
+          </div>
+          <div class="info-box mt16">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div class="tag tag-ok" style="font-size:9px;">✓ Verified</div>
+              <div class="t-xs">KYC complete via UAE PASS</div>
+            </div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Review Order</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Buy Gold — Amount</div>
+        <div class="sl-desc">KYC badge confirms verified status. No more gates.</div>
+      </div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 3.2 Confirm -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">3.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:43</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Confirm Order</div>
+        <div class="sc">
+          <div class="t-lg t-c">Order Summary</div>
+          <div class="divider"></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div class="t-sm">Amount</div>
+            <div class="t-md" style="font-weight:700;">AED 500.00</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div class="t-sm">Gold Weight</div>
+            <div class="t-md" style="font-weight:700;">1.75 g</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div class="t-sm">Price per gram</div>
+            <div class="t-md">AED 285.50</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div class="t-sm">Fee</div>
+            <div class="t-md">AED 0.00</div>
+          </div>
+          <div class="divider"></div>
+          <div style="display:flex;justify-content:space-between;">
+            <div class="t-md" style="font-weight:700;">Total</div>
+            <div class="t-lg">AED 500.00</div>
+          </div>
+          <div class="info-box mt16">
+            <div class="t-xs">Verified identity</div>
+            <div class="t-sm mt4" style="font-weight:600;color:var(--dark);">Mohammed Al Rashid</div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Confirm Purchase</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Order Confirmation</div>
+        <div class="sl-desc">Verified identity shown. User confirms purchase.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== JOURNEY 3: BUNDLED ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4</span>
+    <h2>Journey 3 — Bundled Flow (New User)</h2>
+  </div>
+  <p class="section-desc">User has never connected UAE PASS. Taps "Buy Gold" and gets both OAuth + DV in one perceived flow. Two UAE PASS interactions back-to-back.</p>
+
+  <div class="screen-row">
+
+    <!-- 4.1 -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">4.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Digital Gold</div>
+        <div class="sc" style="filter:blur(1.5px);opacity:0.3;">
+          <div class="t-xl">AED 285.50</div>
+        </div>
+        <div class="bs-overlay">
+          <div class="bs">
+            <div class="bs-handle"></div>
+            <div class="uae-logo">UAE</div>
+            <div class="t-lg t-c">Verify to Buy Gold</div>
+            <div class="t-sm t-c mt8" style="line-height:1.5;">We need to verify your identity before you can invest. This involves two quick steps:</div>
+            <div class="mt12">
+              <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--black);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;">1</div>
+                <div>
+                  <div class="t-md" style="font-weight:700;">Connect UAE PASS</div>
+                  <div class="t-xs">One-time account linking</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:flex-start;">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--black);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;">2</div>
+                <div>
+                  <div class="t-md" style="font-weight:700;">Share Documents</div>
+                  <div class="t-xs">Emirates ID + Passport from Digital Vault</div>
+                </div>
+              </div>
+            </div>
+            <div class="btn mt12">Get Started</div>
+            <div class="t-xs t-c mt8">Takes about 2 minutes</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Bundled Prompt</div>
+        <div class="sl-desc">Explains both steps upfront. "2 minutes" sets expectations.</div>
+      </div>
+    </div>
+
+    <div class="arrow-conn"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+    <!-- 4.2 Step indicator during OAuth -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">4.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"> Setup</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div style="display:flex;gap:6px;margin-bottom:20px;">
+            <div style="display:flex;align-items:center;gap:4px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">1</div>
+              <div class="t-xs" style="font-weight:700;color:var(--black);">Connect</div>
+            </div>
+            <div style="width:16px;height:1.5px;background:var(--faint);align-self:center;"></div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <div style="width:24px;height:24px;border-radius:50%;border:1.5px solid var(--light);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--light);">2</div>
+              <div class="t-xs" style="color:var(--light);">Verify</div>
+            </div>
+          </div>
+          <div class="ic">✓</div>
+          <div class="t-lg t-c mt16">Step 1 Complete</div>
+          <div class="t-sm t-c mt8">UAE PASS connected. Now let's verify your documents.</div>
+        </div>
+        <div class="bf">
+          <div class="btn">Continue to Verification</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Step 1 Done → Step 2</div>
+        <div class="sl-desc">Seamless transition. User sees progress.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">→ continues to screen 2.1</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== PROFILE ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5</span>
+    <h2>Profile — UAE PASS Status</h2>
+  </div>
+  <p class="section-desc">Shows the UAE PASS connection status in the user's profile. Provides a way to refresh or manage the connection.</p>
+
+  <div class="screen-row">
+
+    <!-- 5.1 -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">5.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"> Profile</div>
+        <div class="sc">
+          <div class="prof-row">
+            <div class="prof-avatar">M</div>
+            <div>
+              <div class="t-md" style="font-weight:700;">Mohammed Al Rashid</div>
+              <div class="t-xs">Premium Member</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="card" style="border-color:var(--dark);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="display:flex;gap:8px;align-items:center;">
+                <div class="uae-logo" style="margin:0;width:24px;height:24px;font-size:6px;">UAE</div>
+                <div>
+                  <div class="t-md" style="font-weight:700;">UAE PASS</div>
+                  <div class="t-xs">Connected · Verified</div>
+                </div>
+              </div>
+              <div class="tag tag-ok" style="font-size:8px;">✓ Active</div>
+            </div>
+            <div class="divider" style="margin:8px 0;"></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--mid);">
+              <span>Connected since</span>
+              <span style="color:var(--dark);">18 Feb 2026</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--mid);margin-top:4px;">
+              <span>KYC Status</span>
+              <span style="color:var(--dark);">Verified ✓</span>
+            </div>
+            <div class="btn btn-o mt12" style="font-size:10px;padding:8px;">Refresh UAE PASS Data</div>
+          </div>
+          <div class="t-sm mt12" style="font-weight:600;">Account</div>
+          <div class="prof-row">
+            <div style="flex:1;">
+              <div class="t-md">Personal Details</div>
+            </div>
+            <div class="t-sm">›</div>
+          </div>
+          <div class="prof-row">
+            <div style="flex:1;">
+              <div class="t-md">Security</div>
+            </div>
+            <div class="t-sm">›</div>
+          </div>
+          <div class="prof-row">
+            <div style="flex:1;">
+              <div class="t-md">Payment Methods</div>
+            </div>
+            <div class="t-sm">›</div>
+          </div>
+        </div>
+        <div class="tbar">
+          <div class="tbar-item"><div class="tbar-icon"></div>Home</div>
+          <div class="tbar-item"><div class="tbar-icon"></div>Gold</div>
+          <div class="tbar-item active"><div class="tbar-icon circle"></div>Profile</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Profile Screen</div>
+        <div class="sl-desc">UAE PASS card shows connection + KYC status. Refresh for stale data.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Refresh = re-do OAuth silently</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== ERROR STATES ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">6</span>
+    <h2>Error States</h2>
+  </div>
+  <p class="section-desc">Every error screen provides a clear explanation, a recovery action, and (where applicable) a fallback path.</p>
+
+  <div class="screen-row">
+
+    <!-- 6.1 App not installed -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">6.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Connect UAE PASS</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic" style="border-style:dashed;">↓</div>
+          <div class="t-lg t-c mt16">UAE PASS Not Found</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">You need the UAE PASS app installed to continue. It's free on the App Store.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="info-box">
+              <div class="t-xs" style="line-height:1.5;">Don't have UAE PASS yet? You can register at any government service center or set it up on your phone in minutes.</div>
+            </div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Download UAE PASS</div>
+          <div class="btn btn-o">Upload Documents Manually</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">App Not Installed</div>
+        <div class="sl-desc">Store redirect + manual fallback</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Check: uaepass:// scheme</div></div>
+    </div>
+
+    <!-- 6.2 SOP too low -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">6.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic">⬆</div>
+          <div class="t-lg t-c mt16">Upgrade Required</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">Your UAE PASS is at basic level. Document sharing requires the <strong>verified</strong> level.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="info-box">
+              <div class="t-sm" style="color:var(--dark);line-height:1.6;">
+                <strong>How to upgrade:</strong><br>
+                1. Open UAE PASS app<br>
+                2. Go to Settings → Upgrade<br>
+                3. Complete biometric scan
+              </div>
+            </div>
+            <div class="t-xs t-c mt8">Or visit a government service center</div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Open UAE PASS</div>
+          <div class="btn btn-o">Upload Documents Manually</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">SOP Level Too Low</div>
+        <div class="sl-desc">SOP1/SOP2 detected. Upgrade instructions + manual fallback.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">acr ≠ SOP3</div></div>
+    </div>
+
+    <!-- 6.3 Timed out -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">6.3</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:47</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic">⏱</div>
+          <div class="t-lg t-c mt16">Request Expired</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">The document request wasn't approved within 5 minutes.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="info-box">
+              <div class="t-xs" style="line-height:1.5;"><strong>Tip:</strong> Make sure UAE PASS notifications are enabled so you don't miss the approval prompt.</div>
+            </div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn">Try Again</div>
+          <div class="btn btn-o">Cancel</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Request Timeout</div>
+        <div class="sl-desc">5 min expired. New request_id on retry.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">New POST /presentation/request</div></div>
+    </div>
+
+    <!-- 6.4 Declined -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">6.4</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic">✕</div>
+          <div class="t-lg t-c mt16">Request Declined</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">You chose not to share your documents in the UAE PASS app.</div>
+          <div class="t-sm t-c mt12" style="line-height:1.5;">We need your Emirates ID and Passport to verify your identity for gold investment.</div>
+        </div>
+        <div class="bf">
+          <div class="btn">Try Again</div>
+          <div class="btn btn-o">Upload Documents Manually</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">User Declined</div>
+        <div class="sl-desc">Reject webhook received. Retry + manual fallback.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">Webhook: /reject-notification</div></div>
+    </div>
+
+    <!-- 6.5 Partial -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">6.5</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:43</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Verify Identity</div>
+        <div class="sc">
+          <div class="ic" style="margin-top:12px;">½</div>
+          <div class="t-lg t-c mt16">Almost There</div>
+          <div class="t-sm t-c mt8">We received one document but still need one more.</div>
+          <div class="mt16">
+            <div class="doc-row">
+              <div class="doc-icon" style="border-color:var(--dark);">✓</div>
+              <div class="doc-info">
+                <div class="doc-name">Emirates ID</div>
+                <div class="doc-desc" style="color:var(--dark);font-weight:600;">Received & verified</div>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-icon" style="border-color:var(--mid);">✕</div>
+              <div class="doc-info">
+                <div class="doc-name">Passport</div>
+                <div class="doc-desc">Not shared</div>
+              </div>
+            </div>
+          </div>
+          <div class="t-sm mt12" style="line-height:1.5;">Please share your passport to complete the verification.</div>
+        </div>
+        <div class="bf">
+          <div class="btn">Request Passport</div>
+          <div class="btn btn-o">Cancel</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Partial Documents</div>
+        <div class="sl-desc">1 of 2 received. New DV request for missing doc only.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">New request: passport only</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== MANUAL FALLBACK ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">7</span>
+    <h2>Manual Upload Fallback</h2>
+  </div>
+  <p class="section-desc">Safety net for users who can't use UAE PASS (not installed, SOP too low, repeated failures). Traditional document upload with camera/file picker.</p>
+
+  <div class="screen-row">
+
+    <!-- 7.1 -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">7.1</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span>●●●</span></div>
+        <div class="nav"><span class="bk">‹</span> Manual Verification</div>
+        <div class="sc">
+          <div class="t-lg">Upload Your Documents</div>
+          <div class="t-sm mt8" style="line-height:1.5;">Take clear photos of both sides of each document. Make sure all text is readable.</div>
+          <div class="mt16">
+            <div class="t-sm mb8" style="font-weight:700;color:var(--dark);">Emirates ID</div>
+            <div style="display:flex;gap:8px;">
+              <div class="upload-area" style="flex:1;">
+                <div class="t-sm">📷</div>
+                <div class="t-xs">Front side</div>
+              </div>
+              <div class="upload-area" style="flex:1;">
+                <div class="t-sm">📷</div>
+                <div class="t-xs">Back side</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt16">
+            <div class="t-sm mb8" style="font-weight:700;color:var(--dark);">Passport</div>
+            <div class="upload-area">
+              <div class="t-sm">📷</div>
+              <div class="t-xs">Photo page</div>
+            </div>
+          </div>
+          <div class="info-box mt16">
+            <div class="t-xs" style="line-height:1.5;">⏱ Manual verification takes 1-2 business days. UAE PASS verification is instant.</div>
+          </div>
+        </div>
+        <div class="bf">
+          <div class="btn btn-o">Submit for Review</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Manual Upload</div>
+        <div class="sl-desc">Camera/file upload. 1-2 day review. Note: UAE PASS is instant.</div>
+      </div>
+      <div class="anno"><div class="anno-tag">OCR + manual review</div></div>
+    </div>
+
+    <!-- 7.2 Submitted -->
+    <div class="screen-col">
+      <div class="phone">
+        <span class="s-badge">7.2</span>
+        <div class="notch"></div>
+        <div class="sb"><span>9:42</span><span>●●●</span></div>
+        <div class="nav"> Verification</div>
+        <div class="sc" style="align-items:center;justify-content:center;">
+          <div class="ic" style="border-style:dashed;">📋</div>
+          <div class="t-lg t-c mt16">Under Review</div>
+          <div class="t-sm t-c mt8" style="line-height:1.5;">Your documents have been submitted for manual review. This usually takes 1-2 business days.</div>
+          <div class="mt16" style="width:100%;">
+            <div class="card card-dark">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <div class="t-sm">Emirates ID</div>
+                <div class="tag" style="font-size:8px;">Submitted</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <div class="t-sm">Passport</div>
+                <div class="tag" style="font-size:8px;">Submitted</div>
+              </div>
+            </div>
+          </div>
+          <div class="t-xs t-c mt12">We'll notify you once the review is complete.</div>
+        </div>
+        <div class="bf">
+          <div class="btn btn-o">Done</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="screen-label">
+        <div class="sl-title">Review Pending</div>
+        <div class="sl-desc">Push notification when review completes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div>
+</body>
+</html>
